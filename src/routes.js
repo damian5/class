@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
-import Wrapper from './components/wrapper/wrapper';
+import Father from './components/father/father';
 
 const App = () => {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path='/index' component={Wrapper} />
-          <Redirect from='/' to='/index' />
-        </Switch>
-      </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path='/index' component={Father} />
+        <Redirect from='/' to='/index' />
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;
