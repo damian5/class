@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../button'
+import { connect } from 'react-redux'
+import { handlerPlusCounterAction, handlerMinusCounterAction } from '../../store'
 import styles from './child.module.css'
 
 class Child extends Component {
@@ -10,15 +12,15 @@ class Child extends Component {
     };
   }
 
-  handlerPlusCounter = () => {
-    this.props.plusCounter()
+  plusCounter = () => {
+    this.props.handlerPlusCounterAction();
     this.setState({
       count: this.state.count + 1
     });
   };
 
-  handlerMinusCounter = () => {
-    this.props.minusCounter()
+  minusCounter = () => {
+    this.props.handlerMinusCounterAction();
     this.setState({
       count: this.state.count - 1
     });
@@ -33,12 +35,17 @@ class Child extends Component {
         <Button
           plusLabel={plusLabel}
           minusLabel={minusLabel}
-          plusCounter={this.handlerPlusCounter}
-          minusCounter={this.handlerMinusCounter}
+          plusCounter={this.plusCounter}
+          minusCounter={this.minusCounter}
         />
       </div>
     );
   }
 }
 
-export default Child;
+const mapDispatchToProps = (dispatch) => ({
+  handlerPlusCounterAction: () => dispatch(handlerPlusCounterAction()),
+  handlerMinusCounterAction: () => dispatch(handlerMinusCounterAction())
+})
+
+export default connect(null, mapDispatchToProps)(Child);
