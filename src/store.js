@@ -6,10 +6,10 @@ const initialState = {
   users: [],
   isFetching: false,
   error: undefined,
+  inputValue: '',
 }
 
 const reducer = (state = initialState, action) => {
-  console.log(action)
   switch (action.type) {
     case 'PLUS_COUNTER':
       return {
@@ -39,6 +39,11 @@ const reducer = (state = initialState, action) => {
         isFetching: false,
         error: action.payload,
       }
+    case 'SAVE_INPUT_VALUE':
+      return {
+        ...state,
+        inputValue: action.payload,
+      }
     default:
       return state
   }
@@ -66,7 +71,6 @@ export const fetchUsersError = (error) => ({
   payload: error,
 })
 
-
 export const fetchUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersPending())
@@ -78,6 +82,13 @@ export const fetchUsers = () => {
       .catch(error => {
         dispatch(fetchUsersError(error))
       })
+  }
+}
+
+export const saveInputValue = (text) => {
+  return {
+    type: 'SAVE_INPUT_VALUE',
+    payload: text,
   }
 }
 

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchUsers } from '../../store'
+import { fetchUsers, saveInputValue } from '../../store'
+import filterUsers from '../../filterUsers'
 import Child from '../child';
 import styles from './father.module.css'
 
 class Father extends Component {
 
   render() {
+    console.log('render')
     return (
       <div className={styles.container}>
         <div>Father Counter: {this.props.counter}</div>
@@ -25,6 +27,13 @@ class Father extends Component {
         <button onClick={this.props.fetchUsers}>
           Fetch Users
         </button>
+        <input
+          defaultValue={this.props.inputValue}
+          placeholder={'Search user'}
+          onChange={(e) => {
+            this.props.saveInputValue(e.target.value)
+          }}
+        />
         {this.props.isFetching ? <div>loading</div> : null}
         {this.props.error
           ? (
@@ -53,14 +62,16 @@ const mapStateToProps = (state) => {
   return {
     error: state.error,
     isFetching: state.isFetching,
-    users: state.users,
+    users: filterUsers(state),
     counter: state.counter,
+    inputValue: state.inputValue,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUsers: () => dispatch(fetchUsers())
+    fetchUsers: () => dispatch(fetchUsers()),
+    saveInputValue: (text) => dispatch(saveInputValue(text))
   }
 }
 
