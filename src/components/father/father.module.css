@@ -3,10 +3,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #d4ac60;
 }
 
 .children {
   display: flex;
+}
+
+.user {
+  background-color: #f5f5e6;
+  margin: 5px;
+  border-radius: 3px;
+  padding: 3px;
+  width: 250px;
+}
+
+.error {
+  color: red;
+  margin: 5px;
+  border-radius: 3px;
+  padding: 3px;
+  background-color: #f5f5e6;
 }

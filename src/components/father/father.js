@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { fetchUsers } from '../../store'
 import Child from '../child';
 import styles from './father.module.css'
 
@@ -21,6 +22,28 @@ class Father extends Component {
             minusLabel='click me for minus'
           />
         </div>
+        <button onClick={this.props.fetchUsers}>
+          Fetch Users
+        </button>
+        {this.props.isFetching ? <div>loading</div> : null}
+        {this.props.error
+          ? (
+            <div className={styles.error}>
+              {this.props.error.message}
+            </div>
+          ) : null}
+        <div>
+          {this.props.users.map(user => {
+            return (
+              <div
+                className={styles.user}
+                key={user.id}
+              >
+                {user.name}
+              </div>
+            )
+          })}
+        </div>
       </div>
     );
   }
@@ -28,8 +51,17 @@ class Father extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    error: state.error,
+    isFetching: state.isFetching,
+    users: state.users,
     counter: state.counter,
   }
 }
 
-export default connect(mapStateToProps)(Father);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Father);
